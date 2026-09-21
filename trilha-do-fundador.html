@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0D0F1A">
+<title>Trilha do Fundador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F7FB;
+    --surface: #FFFFFF;
+    --surface-2: #ECEFF7;
+    --text: #14141F;
+    --text-muted: #5B5F73;
+    --border: #DDE1EC;
+    --accent: #4C5FD5;
+    --accent-contrast: #FFFFFF;
+    --gold: #C9820A;
+    --cat-financeiro: #0E8F6B;
+    --cat-gestao: #4C5FD5;
+    --cat-dev: #7C4FE0;
+    --cat-marketing: #C9820A;
+    --cat-vendas: #D14D77;
+    --shadow: 0 1px 2px rgba(20,20,31,.08), 0 8px 24px rgba(20,20,31,.05);
+    --radius: 18px;
+    --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0C0E18;
+      --surface: #151829;
+      --surface-2: #1D2136;
+      --text: #ECEEF7;
+      --text-muted: #9AA0BF;
+      --border: #292E47;
+      --accent: #8C9AFF;
+      --accent-contrast: #0C0E18;
+      --gold: #FFC24B;
+      --cat-financeiro: #2FD3A0;
+      --cat-gestao: #8C9AFF;
+      --cat-dev: #B49BFF;
+      --cat-marketing: #FFC24B;
+      --cat-vendas: #FF9BB8;
+      --shadow: 0 1px 2px rgba(0,0,0,.5), 0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0C0E18;
+    --surface: #151829;
+    --surface-2: #1D2136;
+    --text: #ECEEF7;
+    --text-muted: #9AA0BF;
+    --border: #292E47;
+    --accent: #8C9AFF;
+    --accent-contrast: #0C0E18;
+    --gold: #FFC24B;
+    --cat-financeiro: #2FD3A0;
+    --cat-gestao: #8C9AFF;
+    --cat-dev: #B49BFF;
+    --cat-marketing: #FFC24B;
+    --cat-vendas: #FF9BB8;
+    --shadow: 0 1px 2px rgba(0,0,0,.5), 0 8px 24px rgba(0,0,0,.35);
+  }
+  html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 78px); scroll-behavior: smooth; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px));
+  }
+  h1, h2, h3, .display { font-family: var(--font-display); letter-spacing: -0.01em; margin: 0; }
+  a { color: inherit; }
+  button { font-family: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .wrap { max-width: 640px; margin: 0 auto; padding: 0 16px; }
+
+  /* Header */
+  header.top {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 0;
+  }
+  .top-row { display: flex; align-items: center; gap: 12px; }
+  .name-field {
+    flex: 1; min-width: 0;
+  }
+  .name-field input {
+    width: 100%; border: none; background: transparent; color: var(--text);
+    font-family: var(--font-display); font-size: 17px; font-weight: 600; padding: 2px 0;
+  }
+  .name-field span.sub { display: block; font-size: 12px; color: var(--text-muted); }
+  .level-chip {
+    display: flex; align-items: center; gap: 6px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 999px; padding: 6px 12px; white-space: nowrap; font-weight: 600; font-size: 13px;
+  }
+  .level-chip b { font-family: var(--font-display); color: var(--accent); font-size: 15px; }
+  .xp-track {
+    margin-top: 8px; height: 6px; border-radius: 999px; background: var(--surface-2);
+    overflow: hidden; border: 1px solid var(--border);
+  }
+  .xp-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--cat-dev)); border-radius: 999px; transition: width .6s cubic-bezier(.2,.8,.2,1); }
+  .xp-caption { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+  /* Hero map */
+  .hero { padding: 22px 0 6px; }
+  .hero h1 { font-size: 21px; }
+  .hero p.lede { color: var(--text-muted); font-size: 14px; margin: 6px 0 14px; max-width: 46ch; }
+  .map-shell { position: relative; }
+  .map-shell svg { width: 100%; height: auto; display: block; }
+  .map-node-btn {
+    position: absolute; transform: translate(-50%, -50%);
+    width: 58px; height: 58px; border-radius: 999px; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    font-size: 20px; background: none; padding: 0;
+  }
+  .map-node-btn .pct {
+    position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%);
+    font-size: 10px; font-weight: 700; color: var(--text-muted); white-space: nowrap;
+    font-family: var(--font-display);
+  }
+  .map-node-circle {
+    width: 50px; height: 50px; border-radius: 999px; display: flex; align-items: center; justify-content: center;
+    border: 3px solid var(--border); background: var(--surface); box-shadow: var(--shadow);
+    transition: transform .15s ease, border-color .3s ease;
+  }
+  .map-node-btn:active .map-node-circle { transform: scale(.93); }
+  .map-node-btn.active .map-node-circle { border-color: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent); }
+  .map-node-btn.complete .map-node-circle { color: #fff; }
+
+  /* Category tabs (fallback text under map, also scroll targets) */
+  .cat-legend { display: flex; gap: 8px; overflow-x: auto; padding: 18px 0 4px; scrollbar-width: none; }
+  .cat-legend::-webkit-scrollbar { display: none; }
+  .cat-pill {
+    flex: 0 0 auto; display: flex; align-items: center; gap: 6px;
+    border: 1px solid var(--border); background: var(--surface); border-radius: 999px;
+    padding: 7px 12px 7px 8px; font-size: 12.5px; font-weight: 600; cursor: pointer; color: var(--text);
+  }
+  .cat-pill .dot { width: 8px; height: 8px; border-radius: 999px; }
+
+  /* Category sections */
+  .cat-section { padding: 30px 0 6px; scroll-margin-top: 80px; }
+  .cat-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 4px; }
+  .cat-head h2 { font-size: 18px; display: flex; align-items: center; gap: 8px; }
+  .cat-frac { font-size: 12.5px; font-weight: 700; color: var(--text-muted); font-family: var(--font-display); }
+  .cat-sub { font-size: 13px; color: var(--text-muted); margin: 2px 0 18px; }
+
+  .path { position: relative; padding-left: 26px; }
+  .path::before {
+    content: ""; position: absolute; left: 9px; top: 6px; bottom: 6px; width: 2px;
+    background: repeating-linear-gradient(to bottom, var(--border) 0 6px, transparent 6px 12px);
+  }
+  .node {
+    position: relative; margin-bottom: 14px;
+  }
+  .node-btn {
+    display: flex; align-items: flex-start; gap: 12px; width: 100%; text-align: left;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 12px 14px; cursor: pointer; color: var(--text); box-shadow: var(--shadow);
+    transition: transform .12s ease, border-color .2s ease;
+  }
+  .node-btn:active { transform: scale(.985); }
+  .node-dot {
+    position: absolute; left: -26px; top: 16px; width: 18px; height: 18px; border-radius: 999px;
+    background: var(--bg); border: 2px solid var(--border); flex: none;
+    display: flex; align-items: center; justify-content: center; font-size: 10px; color: #fff;
+  }
+  .node-icon {
+    flex: none; width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 17px; background: var(--surface-2); border: 1px solid var(--border);
+  }
+  .node-body { flex: 1; min-width: 0; }
+  .node-title { font-weight: 700; font-size: 14.5px; margin-bottom: 1px; }
+  .node-meta { font-size: 12px; color: var(--text-muted); }
+  .node-status { flex: none; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 999px; align-self: center; white-space: nowrap; }
+  .status-pendente { color: var(--text-muted); background: var(--surface-2); }
+  .status-andamento { color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, transparent); }
+  .status-concluido { color: #fff; }
+
+  /* Badges */
+  .badges-section { padding: 30px 0 6px; }
+  .badge-row { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+  .badge-row::-webkit-scrollbar { display: none; }
+  .badge {
+    flex: 0 0 auto; width: 96px; text-align: center; padding: 12px 8px; border-radius: var(--radius);
+    background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
+    opacity: .35; filter: grayscale(1);
+  }
+  .badge.earned { opacity: 1; filter: none; }
+  .badge .ic { font-size: 24px; }
+  .badge .lb { font-size: 10.5px; font-weight: 700; margin-top: 4px; color: var(--text-muted); }
+  .badge.earned .lb { color: var(--text); }
+
+  /* Footer */
+  footer { padding: 40px 0 10px; }
+  .info-box {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px; font-size: 13px; color: var(--text-muted); margin-bottom: 12px;
+  }
+  .info-box b { color: var(--text); }
+  .reset-btn {
+    background: none; border: 1px solid var(--border); color: var(--text-muted);
+    border-radius: 999px; padding: 8px 14px; font-size: 12.5px; cursor: pointer;
+  }
+
+  /* Modal */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(10,10,18,.55); z-index: 100;
+    display: flex; align-items: flex-end; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity .2s ease;
+  }
+  .overlay.open { opacity: 1; pointer-events: auto; }
+  .sheet {
+    width: 100%; max-width: 640px; background: var(--surface);
+    border-radius: 22px 22px 0 0; padding: 20px 20px calc(22px + env(safe-area-inset-bottom, 0px));
+    transform: translateY(100%); transition: transform .28s cubic-bezier(.2,.8,.2,1);
+    max-height: 86vh; overflow-y: auto; border: 1px solid var(--border); border-bottom: none;
+  }
+  .overlay.open .sheet { transform: translateY(0); }
+  .sheet-handle { width: 36px; height: 4px; border-radius: 999px; background: var(--border); margin: 0 auto 14px; }
+  .sheet-head { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
+  .sheet-icon { flex: none; width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; background: var(--surface-2); }
+  .sheet-title { font-size: 17px; font-weight: 700; }
+  .sheet-meta { font-size: 12.5px; color: var(--text-muted); margin-top: 2px; }
+  .sheet-desc { font-size: 13.5px; color: var(--text); margin: 12px 0 16px; line-height: 1.55; }
+  .sheet-actions { display: flex; flex-direction: column; gap: 10px; }
+  .btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    border-radius: 12px; padding: 12px 16px; font-weight: 700; font-size: 14px; cursor: pointer; border: 1px solid transparent;
+    text-decoration: none;
+  }
+  .btn-primary { background: var(--accent); color: var(--accent-contrast); }
+  .btn-secondary { background: var(--surface-2); color: var(--text); border-color: var(--border); }
+  .btn-ghost { background: none; color: var(--text-muted); border-color: var(--border); }
+  .upload-zone {
+    border: 1.5px dashed var(--border); border-radius: 12px; padding: 14px; text-align: center;
+    font-size: 12.5px; color: var(--text-muted); position: relative;
+  }
+  .upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+  .cert-preview { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 12px; background: var(--surface-2); font-size: 12.5px; }
+  .cert-preview img { width: 44px; height: 44px; object-fit: cover; border-radius: 8px; }
+  .disclaimer { font-size: 11.5px; color: var(--text-muted); margin-top: 4px; }
+
+  /* Toast */
+  .toast-host { position: fixed; left: 0; right: 0; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; justify-content: center; z-index: 200; pointer-events: none; }
+  .toast {
+    background: var(--text); color: var(--bg); padding: 11px 18px; border-radius: 999px; font-size: 13px; font-weight: 600;
+    box-shadow: var(--shadow); opacity: 0; transform: translateY(10px); transition: all .25s ease;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* Confetti */
+  .confetti-host { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 300; }
+  .confetti-piece { position: absolute; top: -12px; border-radius: 2px; animation: fall 1.5s ease-in forwards; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(360deg); opacity: .2; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: .001s !important; transition-duration: .001s !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="top-row">
+      <div class="name-field">
+        <input id="playerName" type="text" placeholder="Como podemos te chamar?" maxlength="30" aria-label="Seu nome">
+        <span class="sub" id="levelTitle">Curioso(a)</span>
+      </div>
+      <div class="level-chip"><span>Nível</span><b id="levelNum">1</b></div>
+    </div>
+    <div class="xp-track"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+    <div class="xp-caption"><span id="xpNow">0 XP</span><span id="xpNext">próximo nível em 150 XP</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <h1>Trilha do Fundador</h1>
+    <p class="lede">Cursos reais e gratuitos de financeiro, gestão, desenvolvimento, marketing e vendas para quem está construindo uma startup. Avance pelas trilhas, envie o certificado de cada curso e desbloqueie seu progresso.</p>
+
+    <div class="map-shell">
+      <svg viewBox="0 0 380 170" aria-hidden="true">
+        <path d="M40,120 C70,60 85,60 115,55 C145,50 160,120 190,120 C220,120 235,55 265,55 C295,55 310,120 340,120"
+          fill="none" stroke="var(--border)" stroke-width="3" stroke-dasharray="1 10" stroke-linecap="round"/>
+      </svg>
+      <div id="mapNodes"></div>
+    </div>
+
+    <div class="cat-legend" id="catLegend"></div>
+  </section>
+
+  <div id="categorySections"></div>
+
+  <section class="badges-section">
+    <div class="cat-head"><h2>🏅 Conquistas</h2></div>
+    <p class="cat-sub">Complete todos os cursos de uma trilha para desbloquear a medalha.</p>
+    <div class="badge-row" id="badgeRow"></div>
+  </section>
+
+  <footer>
+    <div class="info-box">
+      <b>📲 Salvar na tela do celular:</b> no Android/Chrome, toque no menu ⋮ e escolha "Adicionar à tela inicial". No iPhone/Safari, toque em compartilhar e escolha "Adicionar à Tela de Início". O site abre como um app, sem precisar instalar nada.
+    </div>
+    <div class="info-box">
+      <b>🔒 Sobre o certificado:</b> o envio do certificado é uma comprovação pessoal, guardada só neste navegador — não existe validação por terceiros. É uma forma de você se comprometer a realmente concluir o curso antes de marcar a trilha como feita.
+    </div>
+    <button class="reset-btn" id="resetBtn">Reiniciar todo o progresso</button>
+  </footer>
+
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="sheet" role="dialog" aria-modal="true" id="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-head">
+      <div class="sheet-icon" id="sheetIcon"></div>
+      <div>
+        <div class="sheet-title" id="sheetTitle"></div>
+        <div class="sheet-meta" id="sheetMeta"></div>
+      </div>
+    </div>
+    <div class="sheet-desc" id="sheetDesc"></div>
+    <div class="sheet-actions" id="sheetActions"></div>
+  </div>
+</div>
+
+<div class="toast-host"><div class="toast" id="toast"></div></div>
+<div class="confetti-host" id="confettiHost"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var CATS = {
+    financeiro: { label: "Financeiro", icon: "💰", sub: "Domine fluxo de caixa, precificação e números.", color: "var(--cat-financeiro)" },
+    gestao:     { label: "Gestão", icon: "📊", sub: "Estruture seu modelo de negócio e sua estratégia.", color: "var(--cat-gestao)" },
+    dev:        { label: "Desenvolvimento", icon: "💻", sub: "Entenda (ou pratique) o lado técnico do produto.", color: "var(--cat-dev)" },
+    marketing:  { label: "Marketing", icon: "📣", sub: "Atraia e converta clientes de forma consistente.", color: "var(--cat-marketing)" },
+    vendas:     { label: "Vendas", icon: "🤝", sub: "Transforme interesse em contrato fechado.", color: "var(--cat-vendas)" }
+  };
+
+  // Coordenadas dos nós no mapa (viewBox 380x170), na mesma ordem das categorias acima.
+  var MAP_POS = {
+    financeiro: { x: 40,  y: 120 },
+    gestao:     { x: 115, y: 55  },
+    dev:        { x: 190, y: 120 },
+    marketing:  { x: 265, y: 55  },
+    vendas:     { x: 340, y: 120 }
+  };
+
+  var COURSES = [
+    { id:"fin1", cat:"financeiro", title:"Gestão Financeira para Pequenos Negócios", provider:"Sebrae", url:"https://www.sebrae.com.br/sites/PortalSebrae/ead", hours:"~10h", xp:100,
+      desc:"Fluxo de caixa, controles financeiros e formação de preço para quem está tirando a startup do papel. Sem pré-requisitos, com certificado ao final." },
+    { id:"fin2", cat:"financeiro", title:"Administração Financeira e Custos", provider:"FGV Online", url:"https://www5.fgv.br/fgvonline/", hours:"~6h", xp:100,
+      desc:"Trilha da Fundação Getúlio Vargas com matemática financeira, gestão de custos e fundamentos de administração financeira." },
+    { id:"fin3", cat:"financeiro", title:"Trilha de Finanças", provider:"Escola Virtual (Fundação Bradesco)", url:"https://www.ev.org.br", hours:"~8h", xp:50,
+      desc:"Cursos gratuitos de educação financeira e gestão de recursos, direto da plataforma da Fundação Bradesco." },
+
+    { id:"ges1", cat:"gestao", title:"Como Elaborar um Plano de Negócio", provider:"Sebrae", url:"https://www.sebrae.com.br/sites/PortalSebrae/ead", hours:"~10h", xp:100,
+      desc:"Estrutura o modelo de negócio, o público-alvo e a viabilidade da sua ideia de startup, passo a passo." },
+    { id:"ges2", cat:"gestao", title:"Gestão Estratégica e Inovação", provider:"Escola Virtual do Governo (EVG)", url:"https://www.escolavirtual.gov.br", hours:"~12h", xp:100,
+      desc:"Trilha pública e gratuita com cursos de gestão estratégica, inovação e desenvolvimento gerencial." },
+    { id:"ges3", cat:"gestao", title:"Conteúdos para Scale-ups", provider:"Endeavor Brasil", url:"https://endeavor.org.br", hours:"~4h", xp:50,
+      desc:"Artigos e aulas práticas assinados por empreendedores que já escalaram negócios reais no Brasil." },
+
+    { id:"dev1", cat:"dev", title:"Responsive Web Design (trilha completa)", provider:"freeCodeCamp", url:"https://www.freecodecamp.org/learn", hours:"trilha longa", xp:150,
+      desc:"HTML, CSS e lógica de programação do zero até um projeto certificado. Gratuito, sem prazo, com certificação verificável ao final." },
+    { id:"dev2", cat:"dev", title:"Introdução ao Código", provider:"Google · Eu Capacito", url:"https://www.eucapacito.com.br", hours:"~30min", xp:50,
+      desc:"O que é um código, como ele funciona e por que existem tantas linguagens de programação diferentes." },
+    { id:"dev3", cat:"dev", title:"Trilha de Tecnologia da Informação", provider:"Escola Virtual (Fundação Bradesco)", url:"https://www.ev.org.br", hours:"~10h", xp:100,
+      desc:"Lógica de programação e fundamentos de TI para conversar de igual para igual com o time técnico." },
+
+    { id:"mkt1", cat:"marketing", title:"Fundamentos do Marketing Digital", provider:"Google · Eu Capacito", url:"https://www.eucapacito.com.br", hours:"~40h", xp:150,
+      desc:"26 módulos criados por instrutores do Google, com certificação reconhecida pelo IAB. O curso de marketing mais completo da lista." },
+    { id:"mkt2", cat:"marketing", title:"Marketing Digital para Startups", provider:"RD University", url:"https://university.rdstation.com/cursos", hours:"~3h", xp:100,
+      desc:"Inbound marketing, geração de leads e funil de vendas na prática, direto de quem construiu a RD Station." },
+    { id:"mkt3", cat:"marketing", title:"Marketing", provider:"HubSpot Academy", url:"https://academy.hubspot.com/pt/courses/marketing", hours:"variável", xp:100,
+      desc:"Certificações internacionais gratuitas em marketing de conteúdo, e-mail e estratégia inbound." },
+
+    { id:"ven1", cat:"vendas", title:"Gestão de Vendas com Metodologia PEACE", provider:"RD University", url:"https://university.rdstation.com/cursos", hours:"~3h", xp:50,
+      desc:"Como estruturar times e processos comerciais que realmente vendem, com a metodologia própria da RD Station." },
+    { id:"ven2", cat:"vendas", title:"Vendas", provider:"HubSpot Academy", url:"https://academy.hubspot.com/pt/courses/sales", hours:"variável", xp:100,
+      desc:"Técnicas de vendas inbound reconhecidas globalmente, com certificação gratuita." },
+    { id:"ven3", cat:"vendas", title:"Como Aumentar as Vendas", provider:"Sebrae", url:"https://www.sebrae.com.br/sites/PortalSebrae/ead", hours:"~4h", xp:50,
+      desc:"Técnicas práticas de abordagem, negociação e fechamento pensadas para pequenos negócios." }
+  ];
+
+  var LEVELS = [
+    { min:0,    title:"Curioso(a)" },
+    { min:150,  title:"Aprendiz de Fundador(a)" },
+    { min:300,  title:"Executor(a)" },
+    { min:450,  title:"Estrategista" },
+    { min:600,  title:"Operador(a) de Negócio" },
+    { min:750,  title:"Construtor(a) de Produto" },
+    { min:900,  title:"Referência no Time" },
+    { min:1050, title:"Visionário(a)" },
+    { min:1200, title:"Fundador(a) Completo(a)" },
+    { min:1350, title:"Lenda da Trilha" }
+  ];
+
+  var STORAGE_KEY = "trilha-do-fundador:v1";
+
+  function defaultState(){
+    return { name: "", progress: {} };
+  }
+
+  function loadState(){
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return defaultState();
+      var parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object") return defaultState();
+      parsed.progress = parsed.progress || {};
+      return parsed;
+    } catch(e) {
+      return defaultState();
+    }
+  }
+
+  function saveState(){
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch(e) {
+      // provavelmente estourou a cota por causa de uma miniatura de certificado — removemos as imagens e tentamos de novo
+      var stripped = false;
+      for (var id in state.progress) {
+        if (state.progress[id] && state.progress[id].cert && state.progress[id].cert.dataUrl) {
+          delete state.progress[id].cert.dataUrl;
+          stripped = true;
+        }
+      }
+      if (stripped) {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e2) { /* desiste silenciosamente */ }
+      }
+      showToast("Não foi possível salvar a miniatura do certificado (espaço do navegador cheio), mas seu progresso foi salvo.");
+    }
+  }
+
+  var state = loadState();
+
+  function courseProgress(id){
+    return state.progress[id] || { status: "pendente" };
+  }
+
+  function setCourseProgress(id, patch){
+    var current = state.progress[id] || { status: "pendente" };
+    state.progress[id] = Object.assign({}, current, patch);
+    saveState();
+  }
+
+  function xpTotal(){
+    var xp = 0;
+    COURSES.forEach(function(c){
+      if (courseProgress(c.id).status === "concluido") xp += c.xp;
+    });
+    return xp;
+  }
+
+  function levelInfo(xp){
+    var idx = 0;
+    for (var i=0;i<LEVELS.length;i++){ if (xp >= LEVELS[i].min) idx = i; }
+    var next = LEVELS[idx+1] || null;
+    return { level: idx+1, title: LEVELS[idx].title, floor: LEVELS[idx].min, ceil: next ? next.min : LEVELS[idx].min };
+  }
+
+  function catStats(cat){
+    var list = COURSES.filter(function(c){ return c.cat === cat; });
+    var done = list.filter(function(c){ return courseProgress(c.id).status === "concluido"; }).length;
+    return { done: done, total: list.length };
+  }
+
+  function el(tag, attrs, children){
+    var node = document.createElement(tag);
+    attrs = attrs || {};
+    for (var k in attrs){
+      if (k === "class") node.className = attrs[k];
+      else if (k === "html") node.innerHTML = attrs[k];
+      else node.setAttribute(k, attrs[k]);
+    }
+    (children || []).forEach(function(c){ if (c) node.appendChild(c); });
+    return node;
+  }
+
+  function txt(t){ return document.createTextNode(t); }
+
+  // ---------- Render: header ----------
+  function renderHeader(){
+    var xp = xpTotal();
+    var lvl = levelInfo(xp);
+    document.getElementById("levelNum").textContent = lvl.level;
+    document.getElementById("levelTitle").textContent = lvl.title;
+    document.getElementById("xpNow").textContent = xp + " XP";
+    var span = lvl.ceil - lvl.floor;
+    var pct = span > 0 ? Math.min(100, Math.round(((xp - lvl.floor) / span) * 100)) : 100;
+    document.getElementById("xpFill").style.width = pct + "%";
+    document.getElementById("xpNext").textContent = lvl.ceil === lvl.floor
+      ? "trilha inteira concluída 🎉"
+      : "próximo nível em " + (lvl.ceil - xp) + " XP";
+  }
+
+  // ---------- Render: map ----------
+  function renderMap(){
+    var host = document.getElementById("mapNodes");
+    host.innerHTML = "";
+    Object.keys(CATS).forEach(function(key){
+      var pos = MAP_POS[key];
+      var stats = catStats(key);
+      var complete = stats.done === stats.total;
+      var btn = el("button", {
+        "class": "map-node-btn" + (stats.done > 0 ? " active" : "") + (complete ? " complete" : ""),
+        "style": "left:" + (pos.x/380*100) + "%; top:" + (pos.y/170*100) + "%;",
+        "aria-label": "Ir para trilha de " + CATS[key].label,
+        "data-cat": key
+      }, [
+        el("span", { "class": "map-node-circle", "style": complete ? ("background:" + CATS[key].color + ";border-color:" + CATS[key].color) : "" }, [txt(CATS[key].icon)]),
+        el("span", { "class": "pct" }, [txt(stats.done + "/" + stats.total)])
+      ]);
+      btn.addEventListener("click", function(){
+        var target = document.getElementById("cat-" + this.getAttribute("data-cat"));
+        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+      host.appendChild(btn);
+    });
+  }
+
+  // ---------- Render: legend pills ----------
+  function renderLegend(){
+    var host = document.getElementById("catLegend");
+    host.innerHTML = "";
+    Object.keys(CATS).forEach(function(key){
+      var stats = catStats(key);
+      var pill = el("button", { "class": "cat-pill" }, [
+        el("span", { "class": "dot", "style": "background:" + CATS[key].color }, []),
+        txt(CATS[key].icon + " " + CATS[key].label + " · " + stats.done + "/" + stats.total)
+      ]);
+      pill.addEventListener("click", function(k){
+        return function(){
+          var target = document.getElementById("cat-" + k);
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        };
+      }(key));
+      host.appendChild(pill);
+    });
+  }
+
+  // ---------- Render: category sections ----------
+  function statusLabel(status){
+    if (status === "concluido") return "Concluído";
+    if (status === "andamento") return "Em andamento";
+    return "Não iniciado";
+  }
+
+  function renderSections(){
+    var host = document.getElementById("categorySections");
+    host.innerHTML = "";
+    Object.keys(CATS).forEach(function(key){
+      var cat = CATS[key];
+      var stats = catStats(key);
+      var section = el("section", { "class": "cat-section", id: "cat-" + key });
+      section.appendChild(el("div", { "class": "cat-head" }, [
+        el("h2", {}, [txt(cat.icon + " " + cat.label)]),
+        el("span", { "class": "cat-frac" }, [txt(stats.done + "/" + stats.total)])
+      ]));
+      section.appendChild(el("p", { "class": "cat-sub" }, [txt(cat.sub)]));
+
+      var path = el("div", { "class": "path" });
+      COURSES.filter(function(c){ return c.cat === key; }).forEach(function(course){
+        var prog = courseProgress(course.id);
+        var dotStyle = prog.status === "concluido" ? ("background:" + cat.color + ";border-color:" + cat.color)
+                     : prog.status === "andamento" ? ("border-color:" + cat.color)
+                     : "";
+        var statusClass = prog.status === "concluido" ? "status-concluido" : prog.status === "andamento" ? "status-andamento" : "status-pendente";
+        var statusStyle = prog.status === "concluido" ? ("background:" + cat.color) : "";
+
+        var node = el("div", { "class": "node" }, [
+          el("span", { "class": "node-dot", "style": dotStyle }, [prog.status === "concluido" ? txt("✓") : txt("")]),
+          el("button", { "class": "node-btn", "data-course": course.id }, [
+            el("span", { "class": "node-icon" }, [txt(cat.icon)]),
+            el("div", { "class": "node-body" }, [
+              el("div", { "class": "node-title" }, [txt(course.title)]),
+              el("div", { "class": "node-meta" }, [txt(course.provider + " · " + course.hours + " · " + course.xp + " XP")])
+            ]),
+            el("span", { "class": "node-status " + statusClass, "style": statusStyle }, [txt(statusLabel(prog.status))])
+          ])
+        ]);
+        node.querySelector(".node-btn").addEventListener("click", function(){ openSheet(course.id); });
+        path.appendChild(node);
+      });
+      section.appendChild(path);
+      host.appendChild(section);
+    });
+  }
+
+  // ---------- Render: badges ----------
+  function renderBadges(){
+    var host = document.getElementById("badgeRow");
+    host.innerHTML = "";
+    Object.keys(CATS).forEach(function(key){
+      var cat = CATS[key];
+      var stats = catStats(key);
+      var earned = stats.done === stats.total;
+      host.appendChild(el("div", { "class": "badge" + (earned ? " earned" : "") }, [
+        el("div", { "class": "ic" }, [txt(cat.icon)]),
+        el("div", { "class": "lb" }, [txt("Mestre em " + cat.label)])
+      ]));
+    });
+    var allDone = COURSES.every(function(c){ return courseProgress(c.id).status === "concluido"; });
+    host.appendChild(el("div", { "class": "badge" + (allDone ? " earned" : "") }, [
+      el("div", { "class": "ic" }, [txt("🏆")]),
+      el("div", { "class": "lb" }, [txt("Fundador(a) Completo(a)")])
+    ]));
+  }
+
+  function renderAll(){
+    renderHeader();
+    renderMap();
+    renderLegend();
+    renderSections();
+    renderBadges();
+  }
+
+  // ---------- Modal / sheet ----------
+  var overlay = document.getElementById("overlay");
+  var currentCourseId = null;
+
+  function closeSheet(){
+    overlay.classList.remove("open");
+    currentCourseId = null;
+  }
+
+  function openSheet(courseId){
+    var course = COURSES.filter(function(c){ return c.id === courseId; })[0];
+    if (!course) return;
+    currentCourseId = courseId;
+    var cat = CATS[course.cat];
+    var prog = courseProgress(courseId);
+
+    document.getElementById("sheetIcon").textContent = cat.icon;
+    document.getElementById("sheetTitle").textContent = course.title;
+    document.getElementById("sheetMeta").textContent = course.provider + " · " + course.hours + " · " + course.xp + " XP · " + cat.label;
+    document.getElementById("sheetDesc").textContent = course.desc;
+
+    var actions = document.getElementById("sheetActions");
+    actions.innerHTML = "";
+
+    actions.appendChild(el("a", { "class": "btn btn-primary", href: course.url, target: "_blank", rel: "noopener noreferrer" }, [txt("Abrir curso ↗")]));
+
+    if (prog.status !== "concluido") {
+      if (prog.status !== "andamento") {
+        var startBtn = el("button", { "class": "btn btn-secondary" }, [txt("Marcar como iniciado")]);
+        startBtn.addEventListener("click", function(){
+          setCourseProgress(courseId, { status: "andamento", startedAt: Date.now() });
+          renderAll();
+          openSheet(courseId);
+          showToast("Curso marcado como iniciado. Bora!");
+        });
+        actions.appendChild(startBtn);
+      }
+
+      var uploadZone = el("div", { "class": "upload-zone" }, [
+        txt("📎 Toque para enviar o certificado (imagem ou PDF) e concluir o curso"),
+        el("input", { type: "file", accept: "image/*,.pdf", id: "certInput" }, [])
+      ]);
+      actions.appendChild(uploadZone);
+      actions.appendChild(el("p", { "class": "disclaimer" }, [txt("Isso não é verificado por ninguém — é só o seu compromisso de que o curso foi mesmo concluído.")]));
+
+      document.getElementById("certInput").addEventListener("change", function(e){
+        handleCertUpload(courseId, e.target.files && e.target.files[0]);
+      });
+    } else {
+      var certBox;
+      if (prog.cert && prog.cert.dataUrl) {
+        certBox = el("div", { "class": "cert-preview" }, [
+          el("img", { src: prog.cert.dataUrl, alt: "Miniatura do certificado" }, []),
+          el("span", {}, [txt("Certificado enviado" + (prog.completedAt ? (" em " + new Date(prog.completedAt).toLocaleDateString("pt-BR")) : ""))])
+        ]);
+      } else {
+        certBox = el("div", { "class": "cert-preview" }, [
+          el("span", {}, [txt("✅ Concluído" + (prog.completedAt ? (" em " + new Date(prog.completedAt).toLocaleDateString("pt-BR")) : "") + (prog.cert && prog.cert.name ? (" · " + prog.cert.name) : ""))])
+        ]);
+      }
+      actions.appendChild(certBox);
+
+      var undoBtn = el("button", { "class": "btn btn-ghost" }, [txt("Desfazer conclusão")]);
+      undoBtn.addEventListener("click", function(){
+        setCourseProgress(courseId, { status: "andamento", cert: null, completedAt: null });
+        renderAll();
+        closeSheet();
+        showToast("Conclusão desfeita.");
+      });
+      actions.appendChild(undoBtn);
+    }
+
+    overlay.classList.add("open");
+  }
+
+  overlay.addEventListener("click", function(e){
+    if (e.target === overlay) closeSheet();
+  });
+
+  // ---------- Certificate upload ----------
+  function handleCertUpload(courseId, file){
+    if (!file) return;
+    var isImage = file.type && file.type.indexOf("image/") === 0;
+    var isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name || "");
+
+    if (!isImage && !isPdf) {
+      showToast("Envie uma imagem ou um PDF do certificado.");
+      return;
+    }
+
+    if (isPdf) {
+      completeCourse(courseId, { type: "pdf", name: file.name, size: file.size });
+      return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = function(){
+      var img = new Image();
+      img.onload = function(){
+        var maxW = 320;
+        var scale = Math.min(1, maxW / img.width);
+        var canvas = document.createElement("canvas");
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        var thumb;
+        try { thumb = canvas.toDataURL("image/jpeg", 0.6); } catch(e) { thumb = null; }
+        completeCourse(courseId, { type: "image", name: file.name, dataUrl: thumb });
+      };
+      img.onerror = function(){
+        completeCourse(courseId, { type: "image", name: file.name });
+      };
+      img.src = reader.result;
+    };
+    reader.onerror = function(){
+      showToast("Não consegui ler esse arquivo. Tente novamente.");
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function completeCourse(courseId, cert){
+    setCourseProgress(courseId, { status: "concluido", cert: cert, completedAt: Date.now() });
+    renderAll();
+    openSheet(courseId);
+    var course = COURSES.filter(function(c){ return c.id === courseId; })[0];
+    showToast("Certificado registrado! +" + (course ? course.xp : 0) + " XP 🎉");
+    launchConfetti();
+  }
+
+  // ---------- Toast ----------
+  var toastTimer = null;
+  function showToast(msg){
+    var t = document.getElementById("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 3200);
+  }
+
+  // ---------- Confetti ----------
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function launchConfetti(){
+    if (reduceMotion) return;
+    var host = document.getElementById("confettiHost");
+    var colors = ["#0E8F6B","#4C5FD5","#7C4FE0","#C9820A","#D14D77"];
+    for (var i=0;i<26;i++){
+      var piece = document.createElement("span");
+      piece.className = "confetti-piece";
+      var size = 6 + Math.random()*6;
+      piece.style.width = size + "px";
+      piece.style.height = (size*0.4) + "px";
+      piece.style.left = (Math.random()*100) + "vw";
+      piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+      piece.style.animationDelay = (Math.random()*0.3) + "s";
+      piece.style.animationDuration = (1.1 + Math.random()*0.8) + "s";
+      host.appendChild(piece);
+      (function(p){ setTimeout(function(){ p.remove(); }, 2200); })(piece);
+    }
+  }
+
+  // ---------- Reset ----------
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    if (confirm("Isso vai apagar todo o seu progresso salvo neste navegador. Tem certeza?")) {
+      state = defaultState();
+      saveState();
+      document.getElementById("playerName").value = "";
+      renderAll();
+      showToast("Progresso reiniciado.");
+    }
+  });
+
+  // ---------- Player name ----------
+  var nameInput = document.getElementById("playerName");
+  nameInput.value = state.name || "";
+  nameInput.addEventListener("input", function(){
+    state.name = nameInput.value;
+    saveState();
+  });
+
+  renderAll();
+})();
+</script>
+</body>
+</html>
